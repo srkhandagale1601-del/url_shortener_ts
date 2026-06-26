@@ -1,5 +1,6 @@
 import express from "express";
-import urlRoutes from "./modules/url/url.routes.ts";
+import urlRoutes from "./modules/url/url.routes";
+import { errorHandler } from "./modules/url/url.errorhadler";
 const app = express();
 
 app.use(express.json());
@@ -7,5 +8,5 @@ app.use(express.json());
 
 
 app.use("/urls",urlRoutes);
-
+app.use(errorHandler);
 export default app;

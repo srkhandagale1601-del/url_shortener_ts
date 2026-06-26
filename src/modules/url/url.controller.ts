@@ -1,6 +1,6 @@
-import { prisma } from "../../lib/prisma";
 import { createUrlService,getUrlService,getUrlByID } from "./url.service";
 import {Request,Response} from "express";
+import { createUrlSchema } from "../url.validations";
 
 type UrlParams = {
     shortCode:string
@@ -12,9 +12,14 @@ export const createUrl = async(
     res:Response
     
 )=>{
-    const {originalUrl} = req.body;
+    const validatedResult = createUrlSchema.safeParse(req.body);
+    if(!validatedResult.success){
+        return res.status(400).json({error:validatedResult.error.issues});
+    }
+    const { originalUrl } = validatedResult.data;
     const result = await createUrlService(originalUrl);
     res.json(result);
+    
 };
 
 

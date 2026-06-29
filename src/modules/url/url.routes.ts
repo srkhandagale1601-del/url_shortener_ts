@@ -7,6 +7,6 @@ import { asyncHandler } from "../../middleware/asyncHandler";
 const router = Router();
 
 router.post("/", validate(createUrlSchema), asyncHandler(createUrl));
-router.get("/:shortCode", validate(shortCodeSchema,"params"),redirectUrl);
+router.get("/:shortCode", validate(shortCodeSchema,"params"),asyncHandler(redirectUrl));
 
 export default router;

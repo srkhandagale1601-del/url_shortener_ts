@@ -1,6 +1,6 @@
 import express from "express";
 import urlRoutes from "./modules/url/url.routes";
-import { errorHandler } from "./modules/url/url.errorhadler";
+import { errorHandler } from "./middleware/errorHandler";
 const app = express();
 
 app.use(express.json());

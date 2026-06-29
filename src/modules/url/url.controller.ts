@@ -1,6 +1,6 @@
 import { createUrlService,getUrlService,getUrlByID } from "./url.service";
 import {Request,Response} from "express";
-import { createUrlSchema,shortCodeSchema } from "./url.validation";
+import { createUrlSchema } from "../url/url.validation";
 
 type UrlParams = {
     shortCode:string
@@ -29,13 +29,13 @@ export const redirectUrl = async(
     res:Response
 ) =>{
     const { shortCode } = req.params;
-
+    
     const url = await getUrlService(shortCode);
 
     if(!url){
         return res.status(404).json({message:"Url not found"});
     }
+
     return res.redirect(url.originalUrl);
 }
-
 

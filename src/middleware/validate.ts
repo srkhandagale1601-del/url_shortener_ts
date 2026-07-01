@@ -1,4 +1,4 @@
-import {z} from "zod";
+import {success, z} from "zod";
 import { Request,Response,NextFunction } from "express";
 
 export const validate = (schema: z.ZodObject<any>,source: "body" | "params" | "query" = "body") =>{
@@ -10,7 +10,10 @@ return (req:Request,res:Response,next:NextFunction)=>{
     console.log("query:", req.query);
 
     if(!result.success){
-        return res.status(404).json(result.error.format());
+        return res.status(400).json({
+          success :false,
+          message:result.error.message
+        });
     }
 
     req[source]= result.data;

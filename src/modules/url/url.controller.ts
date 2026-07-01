@@ -2,6 +2,7 @@ import { createUrlService,getUrlService,getUrlByID } from "./url.service";
 import {Request,Response} from "express";
 import { createUrlSchema } from "../url/url.validation";
 import { sendSuccess } from "../../utils/apiResponse";
+import { AppError } from "../../errors/appError";
 
 type UrlParams = {
     shortCode:string
@@ -15,7 +16,7 @@ export const createUrl = async(
 )=>{
     const validatedResult = createUrlSchema.safeParse(req.body);
     if(!validatedResult.success){
-        return res.status(400).json({error:validatedResult.error.issues});
+        throw new AppError(validatedResult.error.message,400);
     }
     const { originalUrl } = validatedResult.data;
     const result = await createUrlService(originalUrl);
@@ -33,9 +34,7 @@ export const redirectUrl = async(
     const url = await getUrlService(shortCode);
 
     if(!url){
-        return res.status(404).json({
-            success:false,
-            message:"Url not found"});
+        throw new AppError("Url Not Found",404);
     }
 
     return res.redirect(url.originalUrl);

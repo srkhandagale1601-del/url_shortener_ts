@@ -12,4 +12,14 @@ model Url {
   originalUrl String
   shortCode   String   @unique
   createdAt   DateTime @default(now())
+  click Click[]
+}
+model Click{
+  id Int @id @default(autoincrement())
+  urlId String
+  userAgent String?
+  createdAt DateTime @default(now())
+  url Url @relation(fields: [urlId],references: [id])
+
+  @@index([urlId])
 }

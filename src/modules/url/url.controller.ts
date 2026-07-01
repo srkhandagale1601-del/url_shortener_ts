@@ -1,8 +1,9 @@
-import { createUrlService,getUrlService,getUrlByID } from "./url.service";
+import { createUrlService,getUrlService } from "./url.service";
 import {Request,Response} from "express";
 import { createUrlSchema } from "../url/url.validation";
 import { sendSuccess } from "../../utils/apiResponse";
 import { AppError } from "../../errors/appError";
+import { prisma } from "../../lib/prisma";
 
 type UrlParams = {
     shortCode:string
@@ -32,11 +33,18 @@ export const redirectUrl = async(
     const { shortCode } = req.params;
     
     const url = await getUrlService(shortCode);
-
-    if(!url){
+    if(url){
+        const userAgent = req.headers["user-agent"] ?? null;
+        await prisma.click.create({
+        data:{
+            urlId: url.id,
+            userAgent,
+        }
+    })
+        
+    }else{
         throw new AppError("Url Not Found",404);
     }
-
     return res.redirect(url.originalUrl);
 }
 

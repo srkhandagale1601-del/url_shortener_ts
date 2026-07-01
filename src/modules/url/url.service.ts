@@ -20,10 +20,3 @@ export const getUrlService = async(
         }
     });
 };
-export const getUrlByID = async(id:string) =>{
-    return await prisma.url.findUnique({
-        where:{
-            id,
-        },
-    });
-}

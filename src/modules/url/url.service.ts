@@ -20,3 +20,30 @@ export const getUrlService = async(
         }
     });
 };
+
+export const getUrlStatsService = async(
+    shortCode:string
+)=>{
+    const url = await prisma.url.findUnique({
+        where:{
+            shortCode,
+        },
+        include:{
+            _count:{
+                select:{
+                    click:true,
+                },
+            },
+        },
+    });
+    if(!url){
+        return null;
+    }
+    return {
+        id:url?.id,
+        orignalUrl:url?.originalUrl,
+        shortCode:url?.shortCode,
+        totalClicks:url?._count.click,
+        createdAt:url?.createdAt
+    }
+};

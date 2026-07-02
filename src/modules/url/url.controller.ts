@@ -1,4 +1,4 @@
-import { createUrlService,getUrlService } from "./url.service";
+import { createUrlService,getUrlService,getUrlStatsService } from "./url.service";
 import {Request,Response} from "express";
 import { createUrlSchema } from "../url/url.validation";
 import { sendSuccess } from "../../utils/apiResponse";
@@ -48,4 +48,16 @@ export const redirectUrl = async(
     return res.redirect(url.originalUrl);
 }
 
+export const getUrlStats = async (
+    req: Request<UrlParams>,
+    res: Response
+) => {
+    const { shortCode } = req.params;
 
+    const stat = await getUrlStatsService(shortCode);
+
+    if (!stat) {
+        throw new AppError("Shortcode not found", 404);
+    }
+    sendSuccess(res, 200, "Url stats fetched successfully", stat);
+};

@@ -2,6 +2,7 @@ import {z} from "zod";
 
 export const createUrlSchema = z.object({
     originalUrl: z.url(),
+    shortCode: z.string(),
 });
 
 export const shortCodeSchema = z.object({

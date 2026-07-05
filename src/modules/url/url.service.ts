@@ -1,12 +1,28 @@
+import { AppError } from "../../errors/appError";
 import { prisma } from "../../lib/prisma";
 import { nanoid } from "nanoid";
 export const createUrlService = async(
     originalUrl: string,
+    shortCode:string,
 )=>{
+    if(!shortCode){
+        shortCode = nanoid(6);
+    }else{
+        shortCode;
+    }
+    const existing = await prisma.url.findUnique({
+        where:{
+            shortCode,
+        }
+    });
+
+    if(existing){
+        throw new AppError("Allready exists",409);
+    }
     return prisma.url.create({
         data:{
             originalUrl,
-            shortCode:nanoid(6)
+            shortCode: shortCode.toLowerCase()
         },
     });
 };

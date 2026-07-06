@@ -4,6 +4,7 @@ import { createUrlSchema } from "../url/url.validation";
 import { sendSuccess } from "../../utils/apiResponse";
 import { AppError } from "../../errors/appError";
 import { prisma } from "../../lib/prisma";
+import { error } from "node:console";
 
 type UrlParams = {
     shortCode:string

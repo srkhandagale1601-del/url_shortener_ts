@@ -1,9 +1,9 @@
 import rateLimit from "express-rate-limit";
 import { success } from "zod";
 
-export const rateLimitter = rateLimit({
+export const rateLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    limit: 50,
+    limit: 100,
     message:{
         success: false,
         err:"Request Limit exceeded",

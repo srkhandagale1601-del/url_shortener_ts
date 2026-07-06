@@ -1,26 +1,19 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
 
-    "rootDir": "./src",
-    "outDir": "./dist",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
 
     "strict": true,
-
-    "sourceMap": true,
-
     "types": ["node"],
 
-    "esModuleInterop": true,
-
-    "skipLibCheck": true,
-    "ignoreDeprecations": "6.0",
-
+    "sourceMap": true,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true
-  },
+    "exactOptionalPropertyTypes": true,
 
-  "include": ["src"]
+    "skipLibCheck": true
+  }
 }

@@ -1,176 +1,150 @@
-# 🔗 URL Shortener API
+# URL Shortener API
 
-A production-style URL Shortener REST API built with **TypeScript**, **Node.js**, **Express.js**, **PostgreSQL**, and **Prisma ORM**.
-
-The project follows a clean, layered architecture with request validation, centralized error handling, reusable middleware, and a service-oriented design. It is being developed as part of my backend engineering journey, focusing on writing scalable and maintainable backend applications.
+A RESTful URL Shortener built with **Node.js**, **Express.js**, **TypeScript**, and **PostgreSQL**. The project demonstrates production-oriented backend development through layered architecture, request validation, centralized error handling, logging, rate limiting, health monitoring, and integration testing.
 
 ---
 
-## ✨ Features
+## 🚀 Features
 
-### URL Management
-
-- Create shortened URLs
-- Generate unique short codes using NanoID
-- Redirect users using short URLs
-- Track click analytics
-- Retrieve URL statistics
-
-### Backend Architecture
-
-- Feature-based folder structure
-- Layered architecture (Controller → Service → Database)
-- Request validation using Zod
-- Async controller wrapper
-- Global error handling
-- Custom application errors
-- Standardized API responses
-
-### Database
-
-- PostgreSQL
-- Prisma ORM
-- Type-safe database operations
-- Database migrations
+- 🔗 Create shortened URLs
+- ↪️ Redirect users using short codes
+- 📊 Retrieve URL analytics
+- ✅ Request validation with Zod
+- 🛡️ Centralized error handling
+- 📝 Request logging middleware
+- 🚦 Rate limiting
+- ❤️ Health check endpoint
+- 🧪 Integration testing with Vitest & Supertest
+- 🗄️ PostgreSQL persistence
+- 📦 Modular and scalable project structure
 
 ---
 
-## 🛠 Tech Stack
+## 🛠️ Tech Stack
 
-| Technology | Purpose |
-|------------|---------|
-| TypeScript | Type-safe backend development |
-| Node.js | Runtime environment |
-| Express.js | REST API framework |
-| PostgreSQL | Database |
-| Prisma ORM | Database ORM |
-| Zod | Request validation |
-| NanoID | Short code generation |
+| Category | Technologies |
+|----------|--------------|
+| Runtime | Node.js |
+| Framework | Express.js |
+| Language | TypeScript |
+| Database | PostgreSQL |
+| Validation | Zod |
+| Testing | Vitest, Supertest |
 
 ---
 
-# 🏗 Architecture
+# 🏗️ Architecture
 
-The application follows a layered architecture.
+The application follows a layered architecture to separate concerns and improve maintainability.
 
 ```text
-Client
-   │
-   ▼
-Express Routes
-   │
-   ▼
-Validation Middleware
-   │
-   ▼
-Controller
-   │
-   ▼
-Service Layer
-   │
-   ▼
-Prisma ORM
-   │
-   ▼
-PostgreSQL
-```
-
-Error flow:
-
-```text
-Application Error
-        │
-        ▼
-Async Handler
-        │
-        ▼
-Global Error Middleware
-        │
-        ▼
-HTTP Response
+                Client
+                   │
+                   ▼
+         Express Application
+                   │
+      ┌────────────┴────────────┐
+      │                         │
+      ▼                         ▼
+   Logger                 Rate Limiter
+                   │
+                   ▼
+          Validation Middleware
+                   │
+                   ▼
+                 Routes
+                   │
+                   ▼
+              Controllers
+                   │
+                   ▼
+                Services
+                   │
+                   ▼
+              PostgreSQL
 ```
 
 ---
 
-## 📁 Project Structure
+## 📂 Project Structure
 
 ```text
 src/
 │
 ├── config/
-│   └── env.ts
-│
-├── errors/
-│   ├── AppError.ts
-│   └── NotFoundError.ts
-│
-├── lib/
-│   └── prisma.ts
-│
 ├── middleware/
-│   ├── asyncHandler.ts
-│   ├── errorHandler.ts
-│   └── validate.ts
 │
 ├── modules/
+│   ├── health/
+│   │   ├── health.controller.ts
+│   │   ├── health.routes.ts
+│   │   └── health.service.ts
+│   │
 │   └── url/
 │       ├── url.controller.ts
 │       ├── url.routes.ts
 │       ├── url.service.ts
 │       ├── url.validation.ts
-│       └── url.types.ts
+│       └── url.repository.ts
 │
 ├── utils/
-│   ├── apiResponse.ts
-│   └── generateShortCode.ts
-│
 ├── app.ts
 └── server.ts
+
+tests/
+│
+├── setup.ts
+│
+└── integration/
+    ├── health.test.ts
+    └── url.test.ts
 ```
 
 ---
 
-## 📡 API Overview
+# 📡 API Endpoints
 
 | Method | Endpoint | Description |
-|---------|----------|-------------|
+|--------|----------|-------------|
 | POST | `/urls` | Create a shortened URL |
-| GET | `/:shortCode` | Redirect to original URL |
-| GET | `/:shortCode/stats` | Retrieve URL statistics |
+| GET | `/urls/:shortCode` | Redirect to the original URL |
+| GET | `/urls/:shortCode/stats` | Retrieve URL statistics |
+| GET | `/health` | Health check endpoint |
 
 ---
 
-## ⚙️ Getting Started
+# ⚙️ Getting Started
 
-### Clone the repository
+## 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd url-shortener-api
+git clone https://github.com/<your-username>/<repository-name>.git
+cd <repository-name>
 ```
 
-### Install dependencies
+---
+
+## 2. Install Dependencies
 
 ```bash
 npm install
 ```
 
-### Configure environment variables
+---
 
-Create a `.env` file.
+## 3. Configure Environment Variables
+
+Create a `.env` file in the project root.
 
 ```env
-DATABASE_URL=your_database_connection_string
 PORT=3000
+DATABASE_URL=your_database_url
+BASE_URL=http://localhost:3000
 ```
 
-### Run database migrations
+---
 
-```bash
-npx prisma migrate dev
-```
-
-### Start the development server
+## 4. Run the Development Server
 
 ```bash
 npm run dev
@@ -178,52 +152,184 @@ npm run dev
 
 The API will be available at:
 
-```text
+```
 http://localhost:3000
 ```
 
 ---
 
-## 🧪 Current Capabilities
+# 🧪 Running Tests
 
-- ✅ URL shortening
-- ✅ URL redirection
-- ✅ Click tracking
-- ✅ URL statistics
-- ✅ Request validation
-- ✅ Centralized error handling
-- ✅ Consistent API responses
+Run all tests
+
+```bash
+npm test
+```
+
+Watch mode
+
+```bash
+npm run test:watch
+```
+
+Generate coverage
+
+```bash
+npm run test:coverage
+```
 
 ---
 
-## 🚧 Planned Improvements
+# 📖 Example API Usage
 
-- Custom short URL aliases
-- URL expiration
-- Request logging middleware
+## Create Short URL
+
+### Request
+
+```http
+POST /urls
+Content-Type: application/json
+```
+
+```json
+{
+  "originalUrl": "https://example.com"
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Short URL created successfully",
+  "data": {
+    "shortCode": "Ab12Cd",
+    "shortUrl": "http://localhost:3000/Ab12Cd"
+  }
+}
+```
+
+---
+
+## Redirect
+
+```http
+GET /urls/Ab12Cd
+```
+
+Returns:
+
+```
+302 Found
+```
+
+Redirects to the original URL.
+
+---
+
+## URL Statistics
+
+```http
+GET /urls/Ab12Cd/stats
+```
+
+Example Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "originalUrl": "https://example.com",
+    "shortCode": "Ab12Cd",
+    "clicks": 15,
+    "createdAt": "2026-07-06T12:00:00.000Z"
+  }
+}
+```
+
+---
+
+## Health Check
+
+```http
+GET /health
+```
+
+Example Response
+
+```json
+{
+  "status": "UP",
+  "timestamp": "2026-07-06T12:30:00.000Z",
+  "uptime": 1024.53
+}
+```
+
+---
+
+# 🧩 Middleware
+
+The project includes the following middleware:
+
+- Logger
+- Rate Limiter
+- Request Validation
+- Async Handler
+- Global Error Handler
+
+---
+
+# ✅ Testing
+
+Integration tests cover:
+
+- Health endpoint
+- URL creation
+- Request validation
+- URL redirection
+- URL statistics
 - Rate limiting
-- Health check endpoint
-- Integration testing
-- Docker support
-- Cloud deployment
 
 ---
 
-## 📚 Key Learnings
+# 📈 Future Improvements
 
-This project helped me gain practical experience with:
+- Authentication
+- Custom aliases
+- Redis integration
+- URL expiration
+- Docker & CI/CD
+- Swagger documentation
 
-- Building RESTful APIs using Express and TypeScript
-- Designing layered backend architectures
-- PostgreSQL database modeling
-- Prisma ORM
-- Request validation with Zod
-- Global exception handling
-- Custom application errors
-- Middleware design
-- Service-oriented architecture
-- Click analytics implementation
-- Writing reusable backend utilities
+---
+
+# 🌐 Deployment
+
+**Live API**
+
+> https://your-deployment-url.com
+
+---
+
+# 📸 Screenshots
+
+Add screenshots after deployment.
+
+Suggested screenshots:
+
+- API request in Postman/Bruno
+- Health endpoint response
+- URL creation response
+- URL statistics response
+- Test suite passing
+- Live deployed application
+
+---
+
+# 📄 License
+
+This project is licensed under the MIT License.
 
 ---
 
@@ -232,5 +338,4 @@ This project helped me gain practical experience with:
 **Sairaj Khandagale**
 
 Backend Developer | Learning Node.js, TypeScript, PostgreSQL, and System Design
-
 This project is part of my journey toward building production-ready backend systems.

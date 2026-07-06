@@ -19,8 +19,9 @@ export const createUrl = async(
     if(!validatedResult.success){
         throw new AppError(validatedResult.error.message,400);
     }
-    const { originalUrl, shortCode } = validatedResult.data;
-    const result = await createUrlService(originalUrl, shortCode ?? "");
+    const { originalUrl } = validatedResult.data;
+    const shortCode = validatedResult.data.shortCode ?? "";
+    const result = await createUrlService(originalUrl, shortCode);
     sendSuccess(res,201,"Short URL created Successfully",result);    
 };
 

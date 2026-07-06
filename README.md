@@ -139,7 +139,6 @@ Create a `.env` file in the project root.
 ```env
 PORT=3000
 DATABASE_URL=your_database_url
-BASE_URL=http://localhost:3000
 ```
 
 ---
@@ -308,7 +307,8 @@ Integration tests cover:
 
 **Live API**
 
-> https://your-deployment-url.com
+> https://url-shortener-ts-16ws.onrender.com/
+
 
 ---
 
@@ -319,11 +319,13 @@ Add screenshots after deployment.
 Suggested screenshots:
 
 - API request in Postman/Bruno
+  <img width="1918" height="886" alt="image" src="https://github.com/user-attachments/assets/60edb75a-417f-4069-bbf1-ccbf2597ab24" />
+
 - Health endpoint response
-- URL creation response
+  <img width="1911" height="618" alt="image" src="https://github.com/user-attachments/assets/471bcd83-5f75-4a4d-8e28-6f68d76d547a" />
+  
 - URL statistics response
-- Test suite passing
-- Live deployed application
+  <img width="1918" height="868" alt="image" src="https://github.com/user-attachments/assets/981c6cba-85e2-47d9-9381-9cf0cf14b200" />
 
 ---
 
